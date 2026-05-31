@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TERMINAL // PORTAL</title>
+    <style>
+        :root {
+            --bg-color: #050505;
+            --main-text: #d1d1d1;
+            --accent: #00ff41;
+            --secondary: #555;
+            --border-style: 1px solid var(--secondary);
+            --glitch-speed: 2s;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--main-text);
+            font-family: 'Courier New', monospace;
+            line-height: 1.6;
+            background-image: url('https://www.transparenttextures.com/patterns/stardust.png');
+        }
+
+        /* Scanline Effect */
+        body::before {
+            content: " ";
+            display: block;
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.15) 50%),
+                linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+            z-index: 9999;
+            background-size: 100% 4px, 3px 100%;
+            pointer-events: none;
+        }
+
+        .container {
+            display: grid;
+            grid-template-areas:
+                "header header header"
+                "sidebar main main"
+                "footer footer footer";
+            grid-template-columns: 250px 1fr 1fr;
+            min-height: 100vh;
+            max-width: 1200px;
+            margin: 0 auto;
+            border-left: var(--border-style);
+            border-right: var(--border-style);
+        }
+
+        header {
+            grid-area: header;
+            padding: 40px;
+            text-align: center;
+            border-bottom: var(--border-style);
+        }
+
+        .glitch {
+            font-size: 3rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            position: relative;
+            display: inline-block;
+            color: var(--accent);
+        }
+
+        /* Glitch Animation */
+        .glitch::before,
+        .glitch::after {
+            content: "SYSTEM ONLINE";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-color);
+        }
+
+        .glitch::before {
+            left: 2px;
+            text-shadow: -2px 0 #ff00c1;
+            clip: rect(44px, 450px, 56px, 0);
+            animation: glitch-anim var(--glitch-speed) infinite linear alternate-reverse;
+        }
+
+        .glitch::after {
+            left: -2px;
+            text-shadow: -2px 0 #00fff9;
+            clip: rect(44px, 450px, 56px, 0);
+            animation: glitch-anim2 var(--glitch-speed) infinite linear alternate-reverse;
+        }
+
+        @keyframes glitch-anim {
+            0% {
+                clip: rect(10px, 9999px, 20px, 0);
+            }
+
+            100% {
+                clip: rect(80px, 9999px, 90px, 0);
+            }
+        }
+
+        @keyframes glitch-anim2 {
+            0% {
+                clip: rect(50px, 9999px, 60px, 0);
+            }
+
+            100% {
+                clip: rect(10px, 9999px, 30px, 0);
+            }
+        }
+
+        nav {
+            grid-area: sidebar;
+            padding: 20px;
+            border-right: var(--border-style);
+        }
+
+        nav h3 {
+            font-size: 0.9rem;
+            border-bottom: 1px solid var(--accent);
+            margin-bottom: 15px;
+            padding-bottom: 5px;
+            color: var(--accent);
+        }
+
+        nav ul {
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-bottom: 10px;
+        }
+
+        nav ul li a {
+            color: var(--main-text);
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: var(--accent);
+            padding-left: 10px;
+        }
+
+        main {
+            grid-area: main;
+            padding: 40px;
+        }
+
+        .content-box {
+            border: 1px solid #333;
+            padding: 20px;
+            margin-bottom: 20px;
+            background: rgba(255, 255, 255, 0.02);
+            transition: 0.3s;
+        }
+
+        .content-box:hover {
+            border-color: var(--accent);
+            box-shadow: 0 0 10px rgba(0, 255, 65, 0.1);
+        }
+
+        h2 {
+            color: var(--accent);
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+        .project-item {
+            border-left: 3px solid var(--accent);
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.03);
+            margin-bottom: 15px;
+        }
+
+        .tag {
+            font-size: 0.65rem;
+            background: #222;
+            color: #aaa;
+            padding: 2px 5px;
+            border: 1px solid #444;
+            margin-right: 5px;
+        }
+
+        footer {
+            grid-area: footer;
+            padding: 20px;
+            text-align: center;
+            border-top: var(--border-style);
+            font-size: 0.8rem;
+            color: var(--secondary);
+        }
+
+        /* Mobile Fix */
+        @media (max-width: 768px) {
+            .container {
+                grid-template-areas:
+                    "header"
+                    "sidebar"
+                    "main"
+                    "footer";
+                grid-template-columns: 1fr;
+            }
+
+            nav {
+                border-right: none;
+                border-bottom: var(--border-style);
+            }
+        }
+
+        /* Gallery Image */
+        .medusa-container {
+            position: relative;
+            display: inline-block;
+            border: 1px solid #444;
+            overflow: hidden;
+            line-height: 0;
+        }
+
+        .medusa-img {
+            max-width: 100%;
+            height: auto;
+            max-height: 400px;
+            filter: grayscale(100%) contrast(110%);
+            transition: 0.5s;
+        }
+
+        .medusa-container:hover .medusa-img {
+            filter: grayscale(0%) contrast(100%);
+            transform: scale(1.02);
+        }
+
+        .scanline {
+            width: 100%;
+            height: 2px;
+            background: rgba(0, 255, 65, 0.2);
+            position: absolute;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            animation: scan 4s linear infinite;
+        }
+
+        @keyframes scan {
+            0% {
+                top: 0;
+            }
+
+            100% {
+                top: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <header>
+            <div class="glitch">SYSTEM ONLINE</div>
+            <p style="margin-top: 10px; color: var(--secondary);">[ Connectivity Established // Ver 2.0.4 ]</p>
+        </header>
+
+        <nav>
+            <h3>DIRECTORY</h3>
+            <ul>
+                <li><a href="#">// Home</a></li>
+                <li><a href="#">// Projects</a></li>
+                <li><a href="#">// Archive</a></li>
+                <li><a href="#">// Guestbook</a></li>
+            </ul>
+
+            <div
+                style="margin-top: 15px; background: #000; padding: 5px; border: 1px solid #222; font-size: 0.65rem; color: var(--accent);">
+                <marquee scrollamount="2">>> ACCESSING DATABASE... SHADERS ENABLED... SYSTEM READY.</marquee>
+            </div>
+
+            <h3 style="margin-top: 30px;">STATION_CONTROL</h3>
+            <div id="music-box" style="border: 1px solid var(--secondary); padding: 10px; background: rgba(0,0,0,0.5);">
+                <p id="now-playing"
+                    style="font-size: 0.7rem; color: var(--accent); margin-bottom: 10px; min-height: 20px;">
+                    STATUS: STANDBY
+                </p>
+
+                <div style="display: flex; justify-content: space-between; gap: 5px;">
+                    <div id="prev-btn" style="cursor: pointer; font-size: 0.8rem; color: var(--secondary);">[PREV]</div>
+                    <div id="play-btn" style="cursor: pointer; font-size: 0.8rem; color: var(--accent);">[PLAY]</div>
+                    <div id="next-btn" style="cursor: pointer; font-size: 0.8rem; color: var(--secondary);">[NEXT]</div>
+                </div>
+            </div>
+            <p style="font-size: 0.6rem; color: var(--secondary); margin-top: 5px; text-align: center;">
+                MOOD: RAINY_TERMINAL // VOL: 20%
+            </p>
+        </nav>
+
+
+        <main>
+            <div class="content-box">
+                <h2>[ MANIFESTO ]</h2>
+                <p>Welcome to this isolated data block. In an era of algorithmic noise, this site stands as a
+                    <strong>digital sanctuary</strong>—a hand-coded space dedicated to personal expression.
+                </p>
+
+                <p
+                    style="margin-top: 15px; border-left: 3px solid var(--accent); padding-left: 15px; font-style: italic; color: var(--secondary);">
+                    "This terminal serves no algorithm. It serves only curiosity and the craft."
+                </p>
+            </div>
+
+            <div class="content-box">
+                <h2>[ DATABASE: PROJECTS ]</h2>
+
+                <div class="project-item">
+                    <span style="color: var(--accent); font-weight: bold;">> CYBERSNAKE.EXE</span>
+                    <p style="font-size: 0.75rem; margin-top: 5px;">Cyberpunk interpretation of the classic snake game.
+                        High-score logic implemented via local storage.</p>
+                    <div style="margin-top: 8px;">
+                        <span class="tag">JAVASCRIPT</span><span class="tag">CANVAS_API</span>
+                        <a href="#" style="color: var(--accent); font-size: 0.7rem; text-decoration: none;">[ SOURCE
+                            ]</a>
+                    </div>
+                </div>
+
+                <div class="project-item">
+                    <span style="color: var(--accent); font-weight: bold;">> NEON_PLATFORMER_2D</span>
+                    <p style="font-size: 0.75rem; margin-top: 5px;">2D platformer physics and character controller
+                        research using Unity Engine.</p>
+                    <div style="margin-top: 8px;">
+                        <span class="tag">C#</span><span class="tag">UNITY</span>
+                        <span style="color: #ff00c1; font-size: 0.7rem;">[ IN_PROGRESS ]</span>
+                    </div>
+                </div>
+
+                <div class="project-item">
+                    <span style="color: var(--accent); font-weight: bold;">> MULTIVERSE_BROWSER</span>
+                    <p style="font-size: 0.75rem; margin-top: 5px;">A web application fetching character data from
+                        external Multiverse APIs.</p>
+                    <div style="margin-top: 8px;">
+                        <span class="tag">API</span><span class="tag">WEB_DEV</span>
+                        <a href="#" style="color: var(--accent); font-size: 0.7rem; text-decoration: none;">[ LIVE_DEMO
+                            ]</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-box" style="text-align: center;">
+                <h2>[ GALLERY: ARTIFACTS ]</h2>
+                <div class="medusa-container">
+                    <img src="medusa.jpg" class="medusa-img" alt="Medusa Artifact">
+                    <div class="scanline"></div>
+                </div>
+                <p style="font-size: 0.7rem; color: var(--secondary); margin-top: 10px;">
+                    STATUS: RENDERED // SOURCE: MEDUSA.BMP
+                </p>
+            </div>
+        </main>
+
+        <footer>
+            &copy; 2026 // NO RIGHTS RESERVED // DISTRIBUTED VIA NEOCITIES
+        </footer>
+    </div>
+
+    <script>
+
+
+        
+const playlist = [
+    { title: "MIDNIGHT_RAIN", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-15.mp3" },
+    { title: "DREAM_LOG_01", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3" },
+    { title: "CYBER_MELANCHOLY", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" },
+    { title: "STATIC_SHORE", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" },
+    { title: "NEON_DUSK", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-10.mp3" },
+    { title: "ANALOG_DREAMS", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3" }
+];
+
+let currentTrack = 0;
+        const audio = new Audio(playlist[currentTrack].url);
+        audio.loop = true;
+
+        const playBtn = document.getElementById('play-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const prevBtn = document.getElementById('prev-btn');
+        const nowPlaying = document.getElementById('now-playing');
+
+        // Şarkı bilgilerini güncelleme fonksiyonu
+        function updateTrack() {
+            audio.src = playlist[currentTrack].url;
+            nowPlaying.innerText = "NOW PLAYING: " + playlist[currentTrack].title;
+            if (!audio.paused) audio.play();
+        }
+
+        // Oynat / Durdur
+        playBtn.addEventListener('click', () => {
+            if (audio.paused) {
+                audio.play();
+                audio.volume = 0.2;
+                playBtn.innerText = "[ STOP ]";
+                playBtn.style.color = "#ff00c1"; // Glitch pembesi
+                nowPlaying.innerText = "NOW PLAYING: " + playlist[currentTrack].title;
+            } else {
+                audio.pause();
+                playBtn.innerText = "[ PLAY ]";
+                playBtn.style.color = "var(--accent)";
+                nowPlaying.innerText = "STATUS: PAUSED";
+            }
+        });
+
+        // Sonraki Şarkı
+        nextBtn.addEventListener('click', () => {
+            currentTrack = (currentTrack + 1) % playlist.length;
+            updateTrack();
+        });
+
+        // Önceki Şarkı
+        prevBtn.addEventListener('click', () => {
+            currentTrack = (currentTrack - 1 + playlist.length) % playlist.length;
+            updateTrack();
+        });
+    </script>
+</body>
+
+</html>
